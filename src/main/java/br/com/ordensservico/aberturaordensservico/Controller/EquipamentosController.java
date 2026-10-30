@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ordensservico.aberturaordensservico.Service.EquipamentosService;
 import br.com.ordensservico.aberturaordensservico.model.Equipamentos;
-import br.com.ordensservico.aberturaordensservico.model.Setor;
+import jakarta.validation.Valid;
 @RestController 
 @RequestMapping ("/equipamentos")
 public class EquipamentosController {
@@ -27,7 +27,7 @@ public class EquipamentosController {
         this.equipamentosService = equipamentosService;
     }
      @PostMapping 
-    public ResponseEntity<Equipamentos> cadastrar( @ RequestBody Equipamentos equipamentos){
+    public ResponseEntity<Equipamentos> cadastrar( @Valid @RequestBody Equipamentos equipamentos){
         Equipamentos equipamentoCadastrado = equipamentosService.cadastrar(equipamentos);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(equipamentoCadastrado);
@@ -51,6 +51,7 @@ public class EquipamentosController {
     }
     @PutMapping("/{id}") 
     public ResponseEntity<Equipamentos> atualizar(
+            @Valid
             @PathVariable Integer id,
             @RequestBody Equipamentos novosDados) {
         Optional<Equipamentos> equipamentosAtualizado = equipamentosService.atualizar(id, novosDados);

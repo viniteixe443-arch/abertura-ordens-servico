@@ -1,6 +1,5 @@
 package br.com.ordensservico.aberturaordensservico.model;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity 
 @Table (name =  "equipamentos")
@@ -23,7 +23,8 @@ public class Equipamentos {
     @NotBlank (message = "O número do equipamento é Obrigatório")
     private String numeroPatrimonio;
 
-     @ManyToOne 
+    @ManyToOne 
+    @NotNull(message = "O setor é obrigatório")
     @JoinColumn (name = "setor_id", nullable = false)
     private Setor setor;
 
