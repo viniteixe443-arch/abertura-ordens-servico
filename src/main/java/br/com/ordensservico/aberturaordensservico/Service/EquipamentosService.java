@@ -39,5 +39,12 @@ public class EquipamentosService {
     equipamento.setSetor(novosDados.getSetor());
     
     return Optional.of(equipamentosRepository.save(equipamento));
-}
+    }
+    public boolean excluir(Integer Id){
+        if(!equipamentosRepository.existsById(Id)){
+            return false;
+        }
+            equipamentosRepository.deleteById(Id);
+            return true;
+    }
 }

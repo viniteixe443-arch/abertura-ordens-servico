@@ -33,10 +33,10 @@ public class SetorService {
         return Optional.of(setorRepository.save(setor));
     }
     public boolean excluir(Integer Id){
-        if(!setorRepository.existsById(Id)){
-            return false;
-        }
-            setorRepository.deleteById(Id);
-            return true;
+     if(!setorRepository.existsById(Id)){
+        return false;
+     }
+         setorRepository.deleteById(Id);
+        return true;
     }
 }
