@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ordensservico.aberturaordensservico.Dto.EquipamentoRequest;
 import br.com.ordensservico.aberturaordensservico.Service.EquipamentosService;
 import br.com.ordensservico.aberturaordensservico.model.Equipamentos;
 import jakarta.validation.Valid;
@@ -26,13 +27,14 @@ public class EquipamentosController {
     public EquipamentosController (EquipamentosService equipamentosService){
         this.equipamentosService = equipamentosService;
     }
-     @PostMapping 
-    public ResponseEntity<Equipamentos> cadastrar( @Valid @RequestBody Equipamentos equipamentos){
-        Equipamentos equipamentoCadastrado = equipamentosService.cadastrar(equipamentos);
+   @PostMapping
+public ResponseEntity<?> cadastrar(@Valid @RequestBody EquipamentoRequest equipamento) {
+    return equipamentosService.cadastrar(equipamento)
+        .map(equipamentoCadastrado -> ResponseEntity.status(HttpStatus.CREATED).body(equipamentoCadastrado))
+        .orElse(ResponseEntity.badRequest().build());
+}
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(equipamentoCadastrado);
-
-    }
+    
     @GetMapping
     public ResponseEntity<List<Equipamentos>> listar() {
         List<Equipamentos> equipamentos = equipamentosService.listar();
@@ -53,8 +55,8 @@ public class EquipamentosController {
     public ResponseEntity<Equipamentos> atualizar(
             @Valid
             @PathVariable Integer id,
-            @RequestBody Equipamentos novosDados) {
-        Optional<Equipamentos> equipamentosAtualizado = equipamentosService.atualizar(id, novosDados);
+            @RequestBody EquipamentoRequest novosDados) {
+            Optional<Equipamentos> equipamentosAtualizado = equipamentosService.atualizar(id, novosDados);
 
         if (equipamentosAtualizado.isPresent()) {
             return ResponseEntity.ok(equipamentosAtualizado.get());
