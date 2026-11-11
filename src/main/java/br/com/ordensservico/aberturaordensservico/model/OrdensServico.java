@@ -1,6 +1,7 @@
 package br.com.ordensservico.aberturaordensservico.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,10 +20,15 @@ public class OrdensServico {
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @NotBlank (message = "A descrição é obrigatória")
     private  String descricao;
 
     private LocalDate dataAbertura;
+
+    private LocalDateTime dataEncerramento;
+
+    @NotBlank (message = "Informe a solução realizada")
+    private String solucao;
 
     @ManyToOne 
     @JoinColumn (name = "equipamento_id", nullable = false)
@@ -59,5 +65,20 @@ public class OrdensServico {
     public void setEquipamento(Equipamentos equipamento) {
         this.equipamento = equipamento;
     }
+    public LocalDateTime getDataEncerramento() {
+    return dataEncerramento;
+}
+
+    public void setDataEncerramento(LocalDateTime dataEncerramento) {
+    this.dataEncerramento = dataEncerramento;
+}
+
+    public String getSolucao() {
+    return solucao;
+}
+
+    public void setSolucao(String solucao) {
+    this.solucao = solucao;
+}
 
 }

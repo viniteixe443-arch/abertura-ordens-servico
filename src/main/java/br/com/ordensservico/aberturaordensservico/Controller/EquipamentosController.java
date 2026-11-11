@@ -51,19 +51,20 @@ public ResponseEntity<?> cadastrar(@Valid @RequestBody EquipamentoRequest equipa
 
         return ResponseEntity.notFound().build();
     }
-    @PutMapping("/{id}") 
-    public ResponseEntity<Equipamentos> atualizar(
-            @Valid
-            @PathVariable Integer id,
-            @RequestBody EquipamentoRequest novosDados) {
-            Optional<Equipamentos> equipamentosAtualizado = equipamentosService.atualizar(id, novosDados);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(
+        @PathVariable Integer id,
+        @Valid @RequestBody EquipamentoRequest novosDados) {
 
-        if (equipamentosAtualizado.isPresent()) {
-            return ResponseEntity.ok(equipamentosAtualizado.get());
-        }
+    Optional<Equipamentos> equipamentoAtualizado =
+            equipamentosService.atualizar(id, novosDados);
 
-        return ResponseEntity.notFound().build();
+    if (equipamentoAtualizado.isPresent()) {
+        return ResponseEntity.ok(equipamentoAtualizado.get());
     }
+
+    return ResponseEntity.notFound().build();
+}
     @DeleteMapping ("/{id}")
     public ResponseEntity<Void> excluir(
             @PathVariable Integer id) {

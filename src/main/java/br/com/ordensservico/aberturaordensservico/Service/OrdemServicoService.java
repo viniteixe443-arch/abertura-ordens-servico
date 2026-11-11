@@ -1,10 +1,12 @@
 package br.com.ordensservico.aberturaordensservico.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
+import br.com.ordensservico.aberturaordensservico.Dto.EncerramentoOrdemServicoRequest;
 import br.com.ordensservico.aberturaordensservico.Dto.OrdemServicoRequest;
 import br.com.ordensservico.aberturaordensservico.Repository.EquipamentosRepository;
 import br.com.ordensservico.aberturaordensservico.Repository.OrdensServicoRepository;
@@ -40,5 +42,18 @@ public class OrdemServicoService {
     public Optional<OrdensServico> listarPorId(Integer id){
         return ordensServicoRepository.findById(id);
     }
-
+    public Optional<OrdensServico> encerrar(Integer id, EncerramentoOrdemServicoRequest encerramentoOrdemServicoRequest){
+        Optional<OrdensServico> ordemServicoOptional = ordensServicoRepository.findById(id);
+        if (ordemServicoOptional.isPresent()) {
+            OrdensServico ordensServico = ordemServicoOptional.get();
+            ordensServico.setSolucao(encerramentoOrdemServicoRequest.getSolucao());
+            ordensServico.setDataEncerramento(LocalDateTime.now());
+            ordensServicoRepository.save(ordensServico);
+            return Optional.of(ordensServico); 
+        }
+        return Optional.empty();
+    }
+       public List<OrdensServico> listarOrdensEmAberto() {
+        return ordensServicoRepository.findByDataEncerramentoIsNull();
+    }
 }

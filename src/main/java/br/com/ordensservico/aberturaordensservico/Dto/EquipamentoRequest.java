@@ -10,7 +10,7 @@ public class EquipamentoRequest {
     @NotBlank (message = "O numero de patrimônio é obrigatório")
     private String numeroPatrimonio;
 
-    @NotNull  (message = "O id é obrigatório")
+    @NotNull (message = "O id é obrigatório")
     private Integer setorId;
 
 
@@ -36,6 +36,9 @@ public void setNumeroPatrimonio(String numeroPatrimonio) {
 
 public Integer getSetorId() {
     return setorId;
+}
+public void setSetorId(Integer setorId) {
+    this.setorId = setorId;
 }
 
 }
